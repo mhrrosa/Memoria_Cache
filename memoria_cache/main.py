@@ -176,9 +176,28 @@ def retorna_tamanho_bloco():
         except:
             continue
 
-    print(f'Opção selecionada: {tamanho_bloco} blocos')
+    print(f'Tamanho selecionado: {tamanho_bloco} blocos')
 
     return tamanho_bloco
+
+def retorna_tecnica_substituicao():
+    tecnica_substituicao = 0
+    dict_opcoes ={
+        1: "LRU",
+        2: "LFU",
+        3: "FIFO"
+    }
+    print("Agora, selecione a opção da técnica de substituição que dejesa!")
+    print("(1) LRU | (2) LFU | (3) FIFO")
+    while tecnica_substituicao not in dict_opcoes.values():
+        try:
+            tecnica_substituicao = dict_opcoes[int(input("Digite a opção que deseja: "))]
+        except:
+            continue
+
+    print(f'Técnica selecionada: {tecnica_substituicao}')
+
+    return tecnica_substituicao
 
 def main():
     #variaveis
@@ -186,21 +205,10 @@ def main():
     #lista com as posições que queremos acessar
     posicoes_memoria_acessar = [0,1,2,2,22,32,42,20,1,10,11,12,13]
 
-
+    #tamanho do conjunto
     tamanho_bloco = retorna_tamanho_bloco()
 
-
-    #Selecionando a técnica de substituição
-    print("#####Selecione a técnica de substituição!#####")
-    print("(1) LRU | (2) LFU | (3) FIFO")
-    tamanho_bloco = int(input("Digite a opção que deseja: "))
-
-
-    
-    tec_subs = int(input("Escolha as tecnicas de substituicao: "))
-    # 1 = fifo
-    # 2 = lru
-    # 3 = lfu
+    tecnica_substituicao = retorna_tecnica_substituicao()
 
     #chamando função mapeamento direto
     mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
