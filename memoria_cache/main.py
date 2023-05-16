@@ -114,82 +114,82 @@ def mapeamento_direto(tamanho_cache, posicoes_memoria_acessar):
 #   # altera a posição de memória que está na cache
 #   memoria_cache[posicao_substituir] = posicao_memoria
 
-# Criando a cache para o conjunto
-# def inicializar_cache_associativo(tamanho_cache, tamanho_bloco):
-#     #criando um dict vazio
-#     cache = {}
-#     #adicionando o valor -1 ate o tamanho indicado na função
-#     for key in range(0, tamanho_cache):
-#         cache[key] = -1
-#     return cache
+#   Criando a cache para o conjunto
+def inicializar_cache_associativo(tamanho_cache, tamanho_bloco):
+    #criando um dict vazio
+    cache = {}
+    #adicionando o valor -1 ate o tamanho indicado na função
+    for key in range(0, tamanho_cache):
+        cache[key] = -1, -1
+    return cache
 
-# #  Imprimindo a cache pro conjunto
-# def imprimir_cache_associativo(dict):
-#     #printando o dict no console
-#     print('Tamanho da cache: ', len(dict))
-#     for key, value in dict.items():
-#         print(f'Posição cache || Posição memoria')
-#         print(f'       {key}      ||       {value} ')
+#  Imprimindo a cache pro conjunto
+def imprimir_cache_associativo(dict):
+    #printando o dict no console
+    print('Tamanho da cache: ', len(dict))
+    for key, value in dict.items():
+        print(f'Posição cache || Posição memoria')
+        print(f'       {key}      ||       {value} ')
 
-# def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tamanho_bloco, tecnica_substituicao):
-#     #inicializando variaveis
-#     hits = 0
-#     misses = 0
-#     status = ''
-#     linha = 0
+def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tamanho_bloco, tecnica_substituicao):
+    #inicializando variaveis
+    hits = 0
+    misses = 0
+    status = ''
+    linha = 0
 
-#     #inicializando a cache
-#     cache = inicializar_cache_associativo(tamanho_cache, tamanho_bloco)
-#     # imprimindo valores iniciais
-#     imprimir_cache_associativo(cache)
+    #inicializando a cache
+    cache = inicializar_cache_associativo(tamanho_cache, tamanho_bloco)
+    # imprimindo valores iniciais
+    imprimir_cache_associativo(cache)
 
-# def retorna_tamanho_conjunto():
-#     tamanho_conjunto = 0
-#     dict_opcoes = {
-#         1: 1,
-#         2: 2,
-#         3: 4,
-#         4: 8,
-#         5: 16
-#     }
-#     print("================================================================")
-#     print("Selecione a opção de quantos blocos (tamanho) terá no conjunto!")
-#     print("(1) 1 bloco | (2) 2 blocos | (3) 4 blocos | (4) 8 blocos | (5) 16 blocos")
-#     while tamanho_conjunto not in dict_opcoes.values():
-#         try:
-#             tamanho_conjunto = dict_opcoes[int(input("Digite a opção que deseja: "))]
-#         except:
-#             continue
+def retorna_tamanho_conjunto():
+    tamanho_conjunto = 0
+    dict_opcoes = {
+        1: 1,
+        2: 2,
+        3: 4,
+        4: 8,
+        5: 16
+    }
+    print("================================================================")
+    print("Selecione a opção de quantos blocos (tamanho) terá no conjunto!")
+    print("(1) 1 bloco | (2) 2 blocos | (3) 4 blocos | (4) 8 blocos | (5) 16 blocos")
+    while tamanho_conjunto not in dict_opcoes.values():
+        try:
+            tamanho_conjunto = dict_opcoes[int(input("Digite a opção que deseja: "))]
+        except:
+            continue
 
-#     print(f'Tamanho selecionado: {tamanho_conjunto} blocos')
+    print(f'Tamanho selecionado: {tamanho_conjunto} blocos')
 
-#     return tamanho_conjunto
+    return tamanho_conjunto
 
-# def retorna_tecnica_substituicao():
-#     tecnica_substituicao = 0
-#     dict_opcoes = {
-#         1: "LRU",
-#         2: "LFU",
-#         3: "FIFO"
-#     }
-#     print("================================================================")
-#     print("Agora, selecione a opção da técnica de substituição que deseja!")
-#     print("(1) LRU | (2) LFU | (3) FIFO")
-#     while tecnica_substituicao not in dict_opcoes.values():
-#         try:
-#             tecnica_substituicao = dict_opcoes[int(input("Digite a opção que deseja: "))]
-#         except:
-#             continue
+def retorna_tecnica_substituicao():
+    tecnica_substituicao = 0
+    dict_opcoes = {
+        1: "LRU",
+        2: "LFU",
+        3: "FIFO"
+    }
+    print("================================================================")
+    print("Agora, selecione a opção da técnica de substituição que deseja!")
+    print("(1) LRU | (2) LFU | (3) FIFO")
+    while tecnica_substituicao not in dict_opcoes.values():
+        try:
+            tecnica_substituicao = dict_opcoes[int(input("Digite a opção que deseja: "))]
+        except:
+            continue
 
-#     print(f'Técnica selecionada: {tecnica_substituicao}')
+    print(f'Técnica selecionada: {tecnica_substituicao}')
 
-#     return tecnica_substituicao
+    return tecnica_substituicao
 
 def main():
     #variaveis
     tamanho_cache = 5
     #lista com as posições que queremos acessar
-    posicoes_memoria_acessar = [0,1,2,2,22,32,42,20,1,10,11,12,13]
+    posicoes_memoria_acessar = [1,6,11,16,21]
 
     #chamando função mapeamento direto
     mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
