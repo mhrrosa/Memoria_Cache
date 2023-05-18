@@ -1,11 +1,5 @@
 #  ------------------- codigo para mapeamento associativo por conjunto ------------------------- #
 
-# def fifo(primeira_linha, tamanho_cache, pos_memoria):
-
-#     linha_subs = calcula_posicao(tamanho_cache, pos_memoria)
-#     return linha_subs
-
-
 # def lru(ultimo_uso, tamanho_cache, pos_memoria):
 
 #     linha_subs = calcula_posicao(tamanho_cache, pos_memoria)
@@ -47,12 +41,6 @@
 #   memoria_cache[posicao_substituir] = posicao_memoria
 
 
-
-
-#  Imprimindo a cache pro conjunto
-
-
-
 #  Criando a cache padrão
 def inicializar_cache(tamanho_cache):
     # criando um dict vazio
@@ -76,16 +64,14 @@ def calcula_posicao(tamanho_cache, pos_memoria):
     pos_cache = pos_memoria % tamanho_cache
     return pos_cache
 
-
-
-def calcula_hit_misses(pos_memoria, valor_cache, hit, misses, status):
+def calcula_hit_misses(pos_memoria, valor_cache, hit, miss, status):
     if pos_memoria == valor_cache:
         hit += 1
-        status = 'Hit'
+        status = "Hit"
     else:
-        misses += 1
+        miss += 1
         status = "Misses"
-    return hit, misses, status
+    return hit, miss, status
 
 
 def mapeamento_direto(tamanho_cache, posicoes_memoria_acessar):
@@ -131,20 +117,19 @@ def imprimir_cache_associativo(dict):
         print(f'       {key}      ||       {value} ')
 
 
-def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
+def inserir_cache_associativo(cache, tipo, pos_memoria, tamanho_conjunto):
     valores_conjunto = []
     if tipo == "FIFO":
 
         #armazenando valores da cache
         lista_valores = list(cache.values())
 
-        #quantidfad de linhas do conjunto
+        #quantidade de linhas do conjunto
         conjunto = int(len(lista_valores) / tamanho_conjunto)
 
-        #em qual conjunto vai inserir
+        #verifica em qual conjunto vai ser inserido
         verifica_conjunto = pos_memoria % 2
 
-        #verifica em qual conjunto vai ser inserido
         if verifica_conjunto == 0:
             num_inicio = 0
 
@@ -156,9 +141,8 @@ def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
             for num in range(num_inicio, len(lista_valores)):
                 valores_conjunto.append(lista_valores[num])
 
-
         if -1 not in valores_conjunto:
-            #retirnado o primeiro que foi adicionado e adicionando novo valor na ultima posição
+            #retirando o primeiro que foi adicionado e adicionando novo valor na ultima posição
             lista_valores.insert(num_inicio+tamanho_conjunto, pos_memoria)
             lista_valores.pop(num_inicio)
             pos_cache = num_inicio
@@ -180,7 +164,31 @@ def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
             cache[index] = novos_valores
             index +=1
 
+    elif tipo == "LRU":
+
+        #armazenando valores da cache
+        lista_valores = list(cache.values())
+
+        #quantidade de linhas do conjunto
+        conjunto = int(len(lista_valores) / tamanho_conjunto)
+
+        #verifica em qual conjunto vai ser inserido
+        verifica_conjunto = pos_memoria % 2
+
+        if verifica_conjunto == 0:
+            num_inicio = 0
+
+            for num in range(num_inicio, tamanho_conjunto):
+                valores_conjunto.append(lista_valores[num])
+        else:
+            num_inicio = tamanho_conjunto
+
+            for num in range(num_inicio, len(lista_valores)):
+                valores_conjunto.append(lista_valores[num])
+
+
     return cache,pos_cache
+
 
 
 def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo,tamanho_conjunto):
@@ -259,19 +267,15 @@ def retorna_tecnica_substituicao():
 def main():
     # variaveis
     tamanho_cache = 16
-    tamanho_conjunto = 8
+    tamanho_conjunto = retorna_tamanho_conjunto()
     posicoes_memoria_acessar = [0,2,4,6,7,3,5]
-    tipo = "FIFO"
+    tipo = retorna_tecnica_substituicao()
 
     # chamando função mapeamento direto
-    #mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
+    # mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
 
-    # #tamanho do conjunto
-    # tamanho_conjunto = retorna_tamanho_conjunto()
-    # #tecnica de substituicao
-    # tecnica_substituicao = retorna_tecnica_substituicao()
-
-    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo, tamanho_conjunto)
+    # chamando função mapeamento associativo por conjunto
+    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tipo, tamanho_conjunto)
 
 
 if __name__ == '__main__':
