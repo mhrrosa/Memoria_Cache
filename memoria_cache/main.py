@@ -148,29 +148,28 @@ def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
         if verifica_conjunto == 0:
             num_inicio = 0
 
-            for num in range(num_inicio, conjunto):
-                valores_conjunto.append(lista_valores[num])
-        else:
-            num_inicio = 2
-
             for num in range(num_inicio, tamanho_conjunto):
                 valores_conjunto.append(lista_valores[num])
+        else:
+            num_inicio = tamanho_conjunto
 
+            for num in range(num_inicio, len(lista_valores)):
+                valores_conjunto.append(lista_valores[num])
 
 
         if -1 not in valores_conjunto:
             #retirnado o primeiro que foi adicionado e adicionando novo valor na ultima posição
-            lista_valores.insert(num_inicio+conjunto, pos_memoria)
+            lista_valores.insert(num_inicio+tamanho_conjunto, pos_memoria)
             lista_valores.pop(num_inicio)
             pos_cache = num_inicio
 
         else:
             #procurar valores vazios e inserir na posição vazia
             index = 0
-            for novos_valores in lista_valores:
+
+            for novos_valores in valores_conjunto:
                 if novos_valores == -1:
-                    lista_valores.pop(index+num_inicio)
-                    lista_valores.insert(index+num_inicio, pos_memoria)
+                    lista_valores[index+num_inicio] = pos_memoria
                     pos_cache = index+num_inicio
                     break
                 index += 1
@@ -184,14 +183,13 @@ def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
     return cache,pos_cache
 
 
-def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo):
+def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo,tamanho_conjunto):
     # inicializando variaveis
     hits = 0
     misses = 0
     status = ''
     linha = 0
-    #todo
-    tamanho_conjunto = 2
+
 
     # inicializando a cache
     cache = inicializar_cache(tamanho_cache)
@@ -260,10 +258,9 @@ def retorna_tecnica_substituicao():
 
 def main():
     # variaveis
-    tamanho_cache = 4
-    # lista com as posições que queremos acessar
-    posicoes_memoria_acessar = [3,0,1,2,4,7]
-
+    tamanho_cache = 16
+    tamanho_conjunto = 8
+    posicoes_memoria_acessar = [0,2,4,6,7,3,5]
     tipo = "FIFO"
 
     # chamando função mapeamento direto
@@ -274,7 +271,7 @@ def main():
     # #tecnica de substituicao
     # tecnica_substituicao = retorna_tecnica_substituicao()
 
-    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo)
+    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo, tamanho_conjunto)
 
 
 if __name__ == '__main__':
