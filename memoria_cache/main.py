@@ -1,71 +1,3 @@
-#  Criando a cache padrão
-def inicializar_cache(tamanho_cache):
-    #criando um dict vazio
-    cache = {}
-    #adicionando o valor -1 ate o tamanho indicado na função
-    for key in range(0, tamanho_cache):
-        cache[key] = -1
-    return cache
-
-#  Imprimindo a cache padrão
-def imprimir_cache(dict):
-    #printando o dict no console
-    print('Tamanho da cache: ', len(dict))
-    for key, value in dict.items():
-        print(f'Posição cache || Posição memoria')
-        print(f'       {key}      ||       {value} ')
-
-
-def calcula_posicao(tamanho_cache, pos_memoria):
-    pos_cache = pos_memoria % tamanho_cache
-    return pos_cache
-
-def calcula_hit_misses(pos_memoria, valor_cache, hit, misses, status):
-    if pos_memoria == valor_cache:
-        hit += 1
-        status = 'Hit'
-    else:
-        misses += 1
-        status = "Misses"
-    return hit, misses, status
-
-
-def mapeamento_direto(tamanho_cache, posicoes_memoria_acessar):
-    #inicializando variaveis
-    hits = 0
-    misses = 0
-    status = ''
-    linha = 0
-
-    #inicializando a cache
-    cache = inicializar_cache(tamanho_cache)
-    # imprimindo valores iniciais
-    imprimir_cache(cache)
-
-    for pos_memoria in posicoes_memoria_acessar:
-        pos_cache = calcula_posicao(tamanho_cache, pos_memoria)
-        valor_cache = cache[pos_cache]
-        #calcula hit e misses
-        hits, misses, status = calcula_hit_misses(pos_memoria, valor_cache, hits, misses, status)
-        # todo só alterar se for misses
-        cache[pos_cache] = pos_memoria
-        # imprimindo valores
-        print('-------------------------------------------')
-        print('Linha ',linha, ' | posição da memoria desejada ', pos_memoria)
-        print('Status: ', status)
-        imprimir_cache(cache)
-
-        linha += 1
-    taxa_acerto = hits*100/(hits+misses)
-    #informações hit e misses
-    print("*-------------------------------------------*")
-    print("Memórias acessadas: ", misses)
-    print("Números de hits: ", hits)
-    print("Números de misses: ", misses)
-    print("Taxa de acertos (hits): ", taxa_acerto, "%")
-    
-
-
 #  ------------------- codigo para mapeamento associativo por conjunto ------------------------- #
 
 # def fifo(primeira_linha, tamanho_cache, pos_memoria):
@@ -114,34 +46,173 @@ def mapeamento_direto(tamanho_cache, posicoes_memoria_acessar):
 #   # altera a posição de memória que está na cache
 #   memoria_cache[posicao_substituir] = posicao_memoria
 
-#   Criando a cache para o conjunto
-def inicializar_cache_associativo(tamanho_cache, tamanho_bloco):
-    #criando um dict vazio
-    cache = {}
-    #adicionando o valor -1 ate o tamanho indicado na função
-    for key in range(0, tamanho_cache):
-        cache[key] = -1, -1
-    return cache
+
+
 
 #  Imprimindo a cache pro conjunto
-def imprimir_cache_associativo(dict):
-    #printando o dict no console
+
+
+
+#  Criando a cache padrão
+def inicializar_cache(tamanho_cache):
+    # criando um dict vazio
+    cache = {}
+    # adicionando o valor -1 ate o tamanho indicado na função
+    for key in range(0, tamanho_cache):
+        cache[key] = -1
+    return cache
+
+
+#  Imprimindo a cache padrão
+def imprimir_cache(dict):
+    # printando o dict no console
     print('Tamanho da cache: ', len(dict))
     for key, value in dict.items():
         print(f'Posição cache || Posição memoria')
         print(f'       {key}      ||       {value} ')
 
-def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tamanho_bloco, tecnica_substituicao):
-    #inicializando variaveis
+
+def calcula_posicao(tamanho_cache, pos_memoria):
+    pos_cache = pos_memoria % tamanho_cache
+    return pos_cache
+
+
+
+def calcula_hit_misses(pos_memoria, valor_cache, hit, misses, status):
+    if pos_memoria == valor_cache:
+        hit += 1
+        status = 'Hit'
+    else:
+        misses += 1
+        status = "Misses"
+    return hit, misses, status
+
+
+def mapeamento_direto(tamanho_cache, posicoes_memoria_acessar):
+    # inicializando variaveis
     hits = 0
     misses = 0
     status = ''
     linha = 0
 
-    #inicializando a cache
-    cache = inicializar_cache_associativo(tamanho_cache, tamanho_bloco)
+    # inicializando a cache
+    cache = inicializar_cache(tamanho_cache)
     # imprimindo valores iniciais
+    imprimir_cache(cache)
+
+    for pos_memoria in posicoes_memoria_acessar:
+        pos_cache = calcula_posicao(tamanho_cache, pos_memoria)
+        valor_cache = cache[pos_cache]
+        # calcula hit e misses
+        hits, misses, status = calcula_hit_misses(pos_memoria, valor_cache, hits, misses, status)
+        # todo só alterar se for misses
+        cache[pos_cache] = pos_memoria
+        # imprimindo valores
+        print('-------------------------------------------')
+        print('Linha ', linha, ' | posição da memoria desejada ', pos_memoria)
+        print('Status: ', status)
+        imprimir_cache(cache)
+
+        linha += 1
+    taxa_acerto = hits * 100 / (hits + misses)
+    # informações hit e misses
+    print("*-------------------------------------------*")
+    print("Memórias acessadas: ", misses)
+    print("Números de hits: ", hits)
+    print("Números de misses: ", misses)
+    print("Taxa de acertos (hits): ", taxa_acerto, "%")
+
+
+def imprimir_cache_associativo(dict):
+    # printando o dict no console
+    print('Tamanho da cache: ', len(dict))
+    for key, value in dict.items():
+        print(f'Posição cache || Posição memoria')
+        print(f'       {key}      ||       {value} ')
+
+
+def inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto):
+    valores_conjunto = []
+    if tipo == "FIFO":
+
+        #armazenando valores da cache
+        lista_valores = list(cache.values())
+
+        #quantidfad de linhas do conjunto
+        conjunto = int(len(lista_valores) / tamanho_conjunto)
+
+        #em qual conjunto vai inserir
+        verifica_conjunto = pos_memoria % 2
+
+        #verifica em qual conjunto vai ser inserido
+        if verifica_conjunto == 0:
+            num_inicio = 0
+
+            for num in range(num_inicio, conjunto):
+                valores_conjunto.append(lista_valores[num])
+        else:
+            num_inicio = 2
+
+            for num in range(num_inicio, tamanho_conjunto):
+                valores_conjunto.append(lista_valores[num])
+
+
+
+        if -1 not in valores_conjunto:
+            #retirnado o primeiro que foi adicionado e adicionando novo valor na ultima posição
+            lista_valores.insert(num_inicio+conjunto, pos_memoria)
+            lista_valores.pop(num_inicio)
+            pos_cache = num_inicio
+
+        else:
+            #procurar valores vazios e inserir na posição vazia
+            index = 0
+            for novos_valores in lista_valores:
+                if novos_valores == -1:
+                    lista_valores.pop(index+num_inicio)
+                    lista_valores.insert(index+num_inicio, pos_memoria)
+                    pos_cache = index+num_inicio
+                    break
+                index += 1
+
+        # inserindo valores novos na cache
+        index = 0
+        for novos_valores in lista_valores:
+            cache[index] = novos_valores
+            index +=1
+
+    return cache,pos_cache
+
+
+def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo):
+    # inicializando variaveis
+    hits = 0
+    misses = 0
+    status = ''
+    linha = 0
+    #todo
+    tamanho_conjunto = 2
+
+    # inicializando a cache
+    cache = inicializar_cache(tamanho_cache)
+    # imprimindo valores iniciais
+    print('mapeamento associativo')
     imprimir_cache_associativo(cache)
+
+    for pos_memoria in posicoes_memoria_acessar:
+
+        cache,pos_cache = inserir_cache_associativo(cache,tipo,pos_memoria,tamanho_conjunto)
+
+        valor_cache = cache[pos_cache]
+        # calcula hit e misses
+        hits, misses, status = calcula_hit_misses(pos_memoria, valor_cache, hits, misses, status)
+
+        # imprimindo valores
+        print('-------------------------------------------')
+        print('Linha ', linha, ' | posição da memoria desejada ', pos_memoria)
+        print('Status: ', status)
+        imprimir_cache(cache)
+
 
 def retorna_tamanho_conjunto():
     tamanho_conjunto = 0
@@ -165,6 +236,7 @@ def retorna_tamanho_conjunto():
 
     return tamanho_conjunto
 
+
 def retorna_tecnica_substituicao():
     tecnica_substituicao = 0
     dict_opcoes = {
@@ -185,21 +257,25 @@ def retorna_tecnica_substituicao():
 
     return tecnica_substituicao
 
-def main():
-    #variaveis
-    tamanho_cache = 5
-    #lista com as posições que queremos acessar
-    posicoes_memoria_acessar = [1,6,11,16,21]
 
-    #chamando função mapeamento direto
-    mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
+def main():
+    # variaveis
+    tamanho_cache = 4
+    # lista com as posições que queremos acessar
+    posicoes_memoria_acessar = [3,0,1,2,4,7]
+
+    tipo = "FIFO"
+
+    # chamando função mapeamento direto
+    #mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
 
     # #tamanho do conjunto
     # tamanho_conjunto = retorna_tamanho_conjunto()
     # #tecnica de substituicao
     # tecnica_substituicao = retorna_tecnica_substituicao()
 
-    # mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tamanho_conjunto, tecnica_substituicao)
+    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo)
+
 
 if __name__ == '__main__':
     main()
