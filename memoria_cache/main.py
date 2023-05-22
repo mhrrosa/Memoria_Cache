@@ -266,16 +266,16 @@ def retorna_tecnica_substituicao():
 
 def main():
     # variaveis
-    tamanho_cache = 16
-    tamanho_conjunto = retorna_tamanho_conjunto()
-    posicoes_memoria_acessar = [0,2,4,6,7,3,5]
-    tipo = retorna_tecnica_substituicao()
+    tamanho_cache = 5
+    posicoes_memoria_acessar = [1,6,1,11,1,16,1,21,1,26]
+    # tamanho_conjunto = retorna_tamanho_conjunto()
+    # tipo = retorna_tecnica_substituicao()
 
     # chamando função mapeamento direto
-    # mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
+    mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
 
     # chamando função mapeamento associativo por conjunto
-    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tipo, tamanho_conjunto)
+    # mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tipo, tamanho_conjunto)
 
 
 if __name__ == '__main__':
