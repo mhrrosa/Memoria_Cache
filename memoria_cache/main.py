@@ -1,5 +1,3 @@
-#  ------------------- codigo para mapeamento associativo por conjunto ------------------------- #
-
 #  Criando a cache padrão
 def inicializar_cache(tamanho_cache):
     # criando um dict vazio
