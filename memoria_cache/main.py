@@ -1,46 +1,5 @@
 #  ------------------- codigo para mapeamento associativo por conjunto ------------------------- #
 
-# def lru(ultimo_uso, tamanho_cache, pos_memoria):
-
-#     linha_subs = calcula_posicao(tamanho_cache, pos_memoria)
-#     return linha_subs
-
-
-# def lfu(memoria_cache, qtd_conjuntos, posicao_memoria):
-
-#   num_conjunto = int(posicao_memoria)%int(qtd_conjuntos)
-#   lista_posicoes = get_lista_posicoes_cache_conjunto(memoria_cache,num_conjunto, qtd_conjuntos)
-
-#   # descobrir dentro do conjunto qual posição da cache tem menos acesso
-#   posicao_substituir = 0
-#   if len(lista_posicoes) > 1:
-
-#     if debug:
-#       imprimir_contador_lfu()
-
-#     # descobrir qual das posições é menos usada
-#     lista_qtd_acessos = []
-#     for qtd_acessos in lista_posicoes:
-#       lista_qtd_acessos.append(contador_lfu[qtd_acessos])
-
-#     posicoes_com_menos_acesso = min(lista_qtd_acessos)
-#     candidatos_lfu = []
-
-#     for qtd_acessos in lista_posicoes:
-#       if contador_lfu[qtd_acessos] == posicoes_com_menos_acesso:
-#         candidatos_lfu.append(qtd_acessos)
-
-#     # para garantir ordem aleatória de escolha caso duas ou mais posições
-#     # tenham o mesmo número de acessos
-#     posicao_substituir = random.choice(candidatos_lfu)
-
-#   # zera o número de acessos a posição que foi substituida
-#   contador_lfu[posicao_substituir] = 0
-
-#   # altera a posição de memória que está na cache
-#   memoria_cache[posicao_substituir] = posicao_memoria
-
-
 #  Criando a cache padrão
 def inicializar_cache(tamanho_cache):
     # criando um dict vazio
@@ -190,7 +149,6 @@ def inserir_cache_associativo(cache, tipo, pos_memoria, tamanho_conjunto):
     return cache,pos_cache
 
 
-
 def mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar,tipo,tamanho_conjunto):
     # inicializando variaveis
     hits = 0
@@ -267,15 +225,15 @@ def retorna_tecnica_substituicao():
 def main():
     # variaveis
     tamanho_cache = 5
-    posicoes_memoria_acessar = [1,6,1,11,1,16,1,21,1,26]
-    # tamanho_conjunto = retorna_tamanho_conjunto()
-    # tipo = retorna_tecnica_substituicao()
+    posicoes_memoria_acessar = [2,7,2,12,2,17,2,22,2,27]
+    tamanho_conjunto = retorna_tamanho_conjunto()
+    tipo = retorna_tecnica_substituicao()
 
     # chamando função mapeamento direto
-    mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
+    # mapeamento_direto(tamanho_cache, posicoes_memoria_acessar)
 
     # chamando função mapeamento associativo por conjunto
-    # mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tipo, tamanho_conjunto)
+    mapeamento_associativo_por_conjunto(tamanho_cache, posicoes_memoria_acessar, tipo, tamanho_conjunto)
 
 
 if __name__ == '__main__':
