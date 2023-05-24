@@ -143,7 +143,6 @@ def inserir_cache_associativo(cache, tipo, pos_memoria, tamanho_conjunto):
             for num in range(num_inicio, len(lista_valores)):
                 valores_conjunto.append(lista_valores[num])
 
-
     return cache,pos_cache
 
 
